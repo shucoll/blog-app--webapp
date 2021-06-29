@@ -89,7 +89,7 @@ const Comment = (props) => {
         aria-label='user'
         className={classes.avatar}
         alt={data.user.name}
-        src={`${process.env.NEXT_PUBLIC_BACKEND_URI}/img/users/${data.user.photo}?${new Date()}`}
+        src={`${process.env.NEXT_PUBLIC_CLOUDINARY_URI}/${data.user.photo}`}
       />
       <div>
         <span className={classes.author}>{data.user.name}</span>

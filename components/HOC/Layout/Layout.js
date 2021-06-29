@@ -164,8 +164,14 @@ export default function MiniDrawer(props) {
   const avatar = user ? (
     <Avatar
       aria-label='user'
-      alt={user ? user.name : null}
-      src={`${process.env.NEXT_PUBLIC_BACKEND_URI}/img/users/${user.photo}?${new Date()}`}
+      alt={user.name}
+      src={
+        user.photo
+          ? `${process.env.NEXT_PUBLIC_CLOUDINARY_URI}/${
+              user.photo
+            }`
+          : null
+      }
     />
   ) : null;
 
@@ -207,7 +213,7 @@ export default function MiniDrawer(props) {
   );
 
   const noAuthMarkup = (
-    <div style={{marginLeft: '.7rem'}}>
+    <div style={{ marginLeft: '.7rem' }}>
       <Link href='/auth/login' passHref>
         <Button
           variant='outlined'

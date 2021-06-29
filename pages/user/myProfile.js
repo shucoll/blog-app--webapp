@@ -114,7 +114,7 @@ const MyProfile = (props) => {
     return () => URL.revokeObjectURL(objectUrl);
   }, [photo]);
 
-  const { data, error } = useSWR(
+  const { data, error, mutate } = useSWR(
     token ? [`api/v1/users/me`, token] : null,
     fetchWithToken,
     {
@@ -145,6 +145,7 @@ const MyProfile = (props) => {
         variant: 'success',
       });
       setPhoto(null);
+      mutate();
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -190,11 +191,11 @@ const MyProfile = (props) => {
             src={
               preview
                 ? preview
-                : `${process.env.NEXT_PUBLIC_BACKEND_URI}/img/users/${data.data.photo}?${new Date()}`
+                : data.data.photo
+                ? `${process.env.NEXT_PUBLIC_CLOUDINARY_URI}/${data.data.photo}`
+                : null
             }
-            // imgProps={{ key: `${new Date()}` }}
-            // key={data.data.updatedAt}
-          />
+          ></Avatar>
           <input
             accept='image/*'
             className={classes.imgInput}
@@ -224,7 +225,9 @@ const MyProfile = (props) => {
             onChange={(e) => setName(e.target.value)}
           />
           <div className={classes.infoLine}>Email - {data.data.email}</div>
-          <div className={classes.infoLine}>Total blogs - {data.data.blogCount}</div>
+          <div className={classes.infoLine}>
+            Total blogs - {data.data.blogCount}
+          </div>
 
           <Button
             type='submit'
