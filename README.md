@@ -9,37 +9,3 @@ The app allows users to signup through Email verification, login through JWT tok
 This project is bootstrapped with [Next.js](https://nextjs.org/).
 
 ## [Live DEMO](https://blog-app-webapp.vercel.app/)
-
-## Installation
-
- First clone the repo
-```sh
-git clone https://github.com/shucoll/blog-app--webapp  
-```
-
-Install the dependencies
-```sh
-npm install
-```
-
-Add and configure .env.local file
-In the .env.local file in project root directory add two environment variables
-```sh
-NEXT_PUBLIC_BACKEND_URI = url-where-backend-is-hosted(eg, http://localhost:5000)
-NEXT_PUBLIC_CLOUDINARY_URI = https://res.cloudinary.com/your-cloudinary-cloud-name/image/upload
-```
-
-Run the development version
-```sh
-npm run dev
-```
-
-Build production version
-```sh
-npm run build
-```
-
-Run production version
-```sh
-npm start
-```
