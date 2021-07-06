@@ -121,7 +121,7 @@ const ResetPassword = (props) => {
               color='primary'
               className={classes.submit}
             >
-              Sign Up
+              Reset Password
             </Button>
           </form>
         )}
