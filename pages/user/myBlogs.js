@@ -58,8 +58,7 @@ const MyBlogs = (props) => {
     <div>
       <Head>
         <title>My Blogs</title>
-        <meta name='description' content='All my blogs' />
-        <link rel='icon' href='/favicon.ico' />
+        <meta name='description' content='My blogs page for Blog App' />
       </Head>
 
       <Typography variant='h4' style={{ margin: '1rem 0 2rem 0' }}>

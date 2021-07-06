@@ -1,4 +1,5 @@
 import { useContext, useState, useEffect } from 'react';
+import Head from 'next/head';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
@@ -173,73 +174,79 @@ const MyProfile = (props) => {
   if (loading) return <Spinner center />;
 
   return (
-    <div className={classes.root}>
-      <Typography component='h1' variant='h4'>
-        My Profile
-      </Typography>
-      <form
-        className={classes.content}
-        encType='multipart/form-data'
-        noValidate
-        onSubmit={handleSubmit}
-      >
-        <div className={classes.profileImageContainer}>
-          <Avatar
-            aria-label='user'
-            className={classes.image}
-            alt={data.data.name}
-            src={
-              preview
-                ? preview
-                : data.data.photo
-                ? `${process.env.NEXT_PUBLIC_CLOUDINARY_URI}/${data.data.photo}`
-                : null
-            }
-          ></Avatar>
-          <input
-            accept='image/*'
-            className={classes.imgInput}
-            id='profile-upload'
-            type='file'
-            onChange={(e) => setPhoto(e.target.files[0])}
-          />
-          <label htmlFor='profile-upload' className={classes.uploadLabel}>
-            <Button
-              variant='contained'
-              color='primary'
-              component='span'
-              startIcon={<PhotoCamera />}
-            >
-              Upload Photo
-            </Button>
-          </label>
-        </div>
-
-        <div className={classes.detailContainer}>
-          <TextField
-            id='outlined-basic'
-            label='Name'
-            variant='outlined'
-            className={classes.input}
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <div className={classes.infoLine}>Email - {data.data.email}</div>
-          <div className={classes.infoLine}>
-            Total blogs - {data.data.blogCount}
+    <>
+      <Head>
+        <title>My Profile</title>
+        <meta name='description' content='My Profile page for Blog App' />
+      </Head>
+      <div className={classes.root}>
+        <Typography component='h1' variant='h4'>
+          My Profile
+        </Typography>
+        <form
+          className={classes.content}
+          encType='multipart/form-data'
+          noValidate
+          onSubmit={handleSubmit}
+        >
+          <div className={classes.profileImageContainer}>
+            <Avatar
+              aria-label='user'
+              className={classes.image}
+              alt={data.data.name}
+              src={
+                preview
+                  ? preview
+                  : data.data.photo
+                  ? `${process.env.NEXT_PUBLIC_CLOUDINARY_URI}/${data.data.photo}`
+                  : null
+              }
+            ></Avatar>
+            <input
+              accept='image/*'
+              className={classes.imgInput}
+              id='profile-upload'
+              type='file'
+              onChange={(e) => setPhoto(e.target.files[0])}
+            />
+            <label htmlFor='profile-upload' className={classes.uploadLabel}>
+              <Button
+                variant='contained'
+                color='primary'
+                component='span'
+                startIcon={<PhotoCamera />}
+              >
+                Upload Photo
+              </Button>
+            </label>
           </div>
 
-          <Button
-            type='submit'
-            variant='contained'
-            color='secondary'
-            className={classes.saveBtn}
-          >
-            Save Changes
-          </Button>
-        </div>
-      </form>
-    </div>
+          <div className={classes.detailContainer}>
+            <TextField
+              id='outlined-basic'
+              label='Name'
+              variant='outlined'
+              className={classes.input}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+            <div className={classes.infoLine}>Email - {data.data.email}</div>
+            <div className={classes.infoLine}>
+              Total blogs - {data.data.blogCount}
+            </div>
+
+            <Button
+              type='submit'
+              variant='contained'
+              color='secondary'
+              className={classes.saveBtn}
+            >
+              Save Changes
+            </Button>
+          </div>
+        </form>
+      </div>
+    </>
   );
 };
 

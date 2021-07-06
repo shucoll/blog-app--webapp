@@ -70,6 +70,10 @@ export default function MyApp(props) {
           name='viewport'
           content='minimum-scale=1, initial-scale=1, width=device-width'
         />
+        <meta
+          name='description'
+          content='Web app for blogging application Blog App'
+        />
       </Head>
       <ThemeProvider theme={theme}>
         <CssBaseline />

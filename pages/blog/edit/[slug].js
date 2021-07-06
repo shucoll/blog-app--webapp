@@ -1,4 +1,5 @@
 import { useContext, useState } from 'react';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
 import Editor from '../../../components/Editor/Editor';
@@ -30,8 +31,7 @@ const EditBlog = (props) => {
 
   const { data, error } = useSWR(
     slug ? `api/v1/blogs/slug/${slug}` : null,
-    fetcher,
-    // { refreshInterval: 0 }
+    fetcher
   );
 
   if (error) {
@@ -102,6 +102,10 @@ const EditBlog = (props) => {
 
   return (
     <>
+      <Head>
+        <title>Edit blog</title>
+        <meta name='description' content='Edit blog page for Blog App' />
+      </Head>
       <Typography variant='h4' style={{ margin: '1rem 0 2rem 0' }}>
         Edit Blog
       </Typography>

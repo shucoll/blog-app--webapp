@@ -8,7 +8,6 @@ export default class MyDocument extends Document {
     return (
       <Html lang='en'>
         <Head>
-          {/* PWA primary color */}
           <meta name='theme-color' content={lightTheme.palette.primary.main} />
           <link
             rel='stylesheet'

@@ -1,4 +1,5 @@
 import { useContext, useState } from 'react';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import Editor from '../../components/Editor/Editor';
 import axios from '../../helpers/axios-orders';
@@ -51,6 +52,10 @@ const CreateBlog = (props) => {
 
   return (
     <>
+      <Head>
+        <title>Create new blog</title>
+        <meta name='description' content='Page for creating new blog with blog app'/>
+      </Head>
       <Typography variant='h4' style={{ margin: '1rem 0 2rem 0' }}>
         Creat Blog
       </Typography>
