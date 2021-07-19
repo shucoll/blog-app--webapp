@@ -1,17 +1,41 @@
 import React from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import useSWR from 'swr';
 import axios from '../helpers/axios-orders';
 import Pagination from '@material-ui/lab/Pagination';
 
 import { useSnackbar } from 'notistack';
 
 import BlogCards from '../components/BlogCards/BlogCards';
+import Spinner from '../components/UI/Spinner';
+
+const fetcher = (url) => axios.get(url).then((res) => res.data);
 
 const Home = (props) => {
   const router = useRouter();
 
   const { enqueueSnackbar } = useSnackbar();
+
+  const page = router.query.page || 1;
+  const limit = 20;
+
+  const { data, error } = useSWR(
+    `api/v1/blogs?limit=${limit}&fields=title,description,user,slug,createdAt,updatedAt&page=${page}`,
+    fetcher
+  );
+
+  if (error) {
+    let errMessage;
+    if (error.response) {
+      errMessage = error.response.data.message;
+    } else errMessage = 'Something went wrong, Please reload to view content';
+
+    enqueueSnackbar(errMessage, { variant: 'error' });
+    return null;
+  }
+
+  if (!data) return <Spinner center />;
 
   const paginationHandler = (event, page) => {
     const currentPath = router.pathname;
@@ -24,10 +48,6 @@ const Home = (props) => {
     });
   };
 
-  if (props.error) {
-    enqueueSnackbar(props.error, { variant: 'error' });
-    return null;
-  }
   return (
     <div>
       <Head>
@@ -37,38 +57,18 @@ const Home = (props) => {
           content='All blogs list for blogging application Blog App'
         />
       </Head>
-      {props.data ? (
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <BlogCards data={props.data.data} />
-          <div style={{ alignSelf: 'center', marginTop: '3rem' }}>
-            <Pagination
-              count={Math.ceil(props.data.totalResults / (props.limit * 1))}
-              page={props.page * 1}
-              onChange={paginationHandler}
-            />
-          </div>
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <BlogCards data={data.data} />
+        <div style={{ alignSelf: 'center', marginTop: '3rem' }}>
+          <Pagination
+            count={Math.ceil(data.totalResults / limit)}
+            page={page * 1}
+            onChange={paginationHandler}
+          />
         </div>
-      ) : null}
+      </div>
     </div>
   );
 };
-
-export async function getServerSideProps({ query }) {
-  const page = query.page || 1;
-  const limit = 20;
-  try {
-    const data = await axios.get(
-      `api/v1/blogs?limit=${limit}&fields=title,description,user,slug,createdAt,updatedAt&page=${page}`
-    );
-    return { props: { data: data.data, page, limit } };
-  } catch (error) {
-    if (error.response)
-      return { props: { error: error.response.data.message } };
-    else
-      return {
-        props: { error: 'Something went wrong. Please reload to view content' },
-      };
-  }
-}
 
 export default Home;

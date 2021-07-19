@@ -8,4 +8,4 @@ The app allows users to signup through Email verification, login through JWT tok
  
 This project is bootstrapped with [Next.js](https://nextjs.org/).
 
-## [Live DEMO](https://blog-app-webapp.vercel.app/)
+## [Live DEMO](https://blog-app-webapp.netlify.app/)
