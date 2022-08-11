@@ -93,12 +93,9 @@ export default function MyApp(props) {
           <AuthContextProvider>
             <PrivateRoute protectedRoutes={protectedRoutes}>
               {/* <NoAuthRoute noAuthRoutes={noAuthRoutes}> */}
-              {/* <AuthGuard> */}
               <Layout>
                 {loading ? <ScreenLoader /> : <Component {...pageProps} />}
               </Layout>
-              {/* </AuthGuard> */}
-
               {/* </NoAuthRoute> */}
             </PrivateRoute>
           </AuthContextProvider>
